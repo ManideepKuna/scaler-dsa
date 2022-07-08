@@ -65,9 +65,9 @@ public class LinkedList {
         return ++count;
     }
 
-    public void reverse(LinkedList list)
+    public Node reverse(Node list)
     {
-        Node curr = list.head;
+        Node curr = list;
         Node prev = null;
         while(curr!=null)
         {
@@ -76,8 +76,8 @@ public class LinkedList {
             prev=curr;
             curr=temp;
         }
-        list.head=prev;
-        list.show();
+        list=prev;
+        return list;
     }
 
     public void KReverse(LinkedList list, int k)
@@ -132,6 +132,48 @@ public class LinkedList {
         }
         tail.next = p2;
         return Arrays.asList(p1,tail);
+    }
+
+    public Node reorderList(Node list)
+    {
+        Node temp = list;
+        Node midNode = findMid(temp);
+        Node reverseHead = reverse(midNode);
+        int count=0;
+
+        Node p1 = list;
+        Node p2 = reverseHead;
+        while(p1.next!=null )
+        {
+            Node temp1 = p1.next;
+            p1.next=p2;
+            Node temp2 = p2.next;
+            p2.next=temp1;
+            p1=temp1;
+            p2=temp2;
+            count++;
+        }
+        if(count%2==0)
+        {
+            p1.next=p2;
+            p2.next=null;
+        }
+        System.out.println(count);
+        return list;
+    }
+
+    public Node findMid(Node list)
+    {
+        Node head = list;
+        Node p1= head;
+        Node p2 = head;
+        while(p2.next!=null && p2.next.next!=null)
+        {
+            p1=p1.next;
+            p2=p2.next.next;
+        }
+
+        return p1;
     }
 
 }
